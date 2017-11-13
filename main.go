@@ -7,6 +7,7 @@ import (
 	"os"
 	"github.com/jackmanlabs/errors"
 	"encoding/json"
+	"github.com/jackmanlabs/ally-api/lib"
 )
 
 func main() {
@@ -61,7 +62,12 @@ var configPath	*string = flag.String("config","","The path of the configuration 
 	oauthConfig := oauth1.NewConfig(config.ConsumerKey, config.ConsumerSecret)
 	oauthToken := oauth1.NewToken(config.Token,config.TokenSecret)
 
-	oauthClient := oauth1.NewClient(nil, oauthConfig,oauthToken)
+	oauthClient := oauth1.NewClient(oauth1.NoContext, oauthConfig,oauthToken)
+
+	err = lib.GetAccounts(oauthClient)
+	if err != nil{
+		log.Print(errors.Stack(err))
+	}
 }
 
 
