@@ -64,7 +64,7 @@ var configPath	*string = flag.String("config","","The path of the configuration 
 
 	oauthClient := oauth1.NewClient(oauth1.NoContext, oauthConfig,oauthToken)
 
-	err = lib.GetAccounts(oauthClient)
+	_, err = lib.GetAccountsBalances(oauthClient)
 	if err != nil{
 		log.Print(errors.Stack(err))
 	}

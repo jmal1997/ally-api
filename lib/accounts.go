@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"encoding/xml"
 	"github.com/jackmanlabs/errors"
 	"io"
 	"net/http"
@@ -27,18 +26,54 @@ func GetAccounts(client *http.Client) (*AccountsResponse, error) {
 	}
 
 	var accountsResponse *AccountsResponse = new(AccountsResponse)
-	xml.NewDecoder(resp.Body).Decode(&accountsResponse)
+	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
 
 	return accountsResponse, nil
 }
 
+func GetAccountsBalances(client *http.Client) (*AccountsBalancesResponse, error) {
+
+	url := "https://api.tradeking.com/v1/accounts/balances.xml"
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	_, err = io.Copy(os.Stdout, resp.Body)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	var accountsBalanceResponse *AccountsBalancesResponse = new(AccountsBalancesResponse)
+	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return accountsBalanceResponse, nil
+}
+
 type AccountsResponse struct {
-	Accounts struct {
-		AccountSummary AccountSummary `xml:"accountsummary"`
-	} `xml:"accounts"`
-	ResponseId  string  `xml:"id,attr" json:"id"`
-	ElapsedTime float64 `xml:"elapsedtime,omitempty"`
-	Error       string  `xml:"error,omitempty"`
+	AccountSummaries []AccountSummary `xml:"accounts>accountsummary"`
+	ResponseId       string           `xml:"id,attr" json:"id"`
+	ElapsedTime      float64          `xml:"elapsedtime,omitempty"`
+	Error            string           `xml:"error,omitempty"`
+}
+
+type AccountsBalancesResponse struct {
+	AccountBalances []AccountBalance `xml:"accountbalance"`
+	ResponseId      string           `xml:"id,attr" json:"id"`
+	ElapsedTime     float64          `xml:"elapsedtime,omitempty"`
+	Error           string           `xml:"error,omitempty"`
+	TotalBalance    float64          `xml:"totalbalance>accountvalue"`
 }
 
 type AccountSummary struct {
@@ -49,12 +84,13 @@ type AccountSummary struct {
 
 type AccountBalance struct {
 	Account      int                `xml:"account"`
-	AccountValue float64            `xml:"accountvalue"` // Account value
-	BuyingPower  AccountBuyingPower `xml:"buyingpower"`
-	FedCall      float64            `xml:"fedcall"`   // Value of any fed call on account
-	HouseCall    float64            `xml:"housecall"` // Value of any house call
-	Money        AccountMoney       `xml:"money"`
-	Securities   AccountSecurities  `xml:"securities"`
+	AccountName  string             `xml:"accountname,omitempty"` // Used in the 'GET accounts/balances' response
+	AccountValue float64            `xml:"accountvalue"`          // Account value
+	BuyingPower  AccountBuyingPower `xml:"buyingpower"`           //
+	FedCall      float64            `xml:"fedcall"`               // Value of any fed call on account
+	HouseCall    float64            `xml:"housecall"`             // Value of any house call
+	Money        AccountMoney       `xml:"money"`                 //
+	Securities   AccountSecurities  `xml:"securities"`            //
 }
 
 type AccountMoney struct {
@@ -80,40 +116,44 @@ type AccountSecurities struct {
 }
 
 type AccountHoldings struct {
-	Holdings        []AccountHolding `xml:"holding"`
-	TotalSecurities float64          `xml:"totalsecurities"` // Total account market value
-	DisplayData     struct {
-		TotalSecurities string `xml:"totalsecurities"` // Total account market value
-	} `xml:"displaydata"`
+	Holdings        []AccountHolding           `xml:"holding"`
+	TotalSecurities float64                    `xml:"totalsecurities"` // Total account market value
+	DisplayData     AccountHoldingsDisplayData `xml:"displaydata"`
+}
+
+type AccountHoldingsDisplayData struct {
+	TotalSecurities string `xml:"totalsecurities"` // Total account market value
 }
 
 type AccountBuyingPower struct {
 	CashAvailableForWithdrawal float64 `xml:"cashavailableforwithdrawal,omitempty"` // Cash available for withdrawal (cash & margin accounts only, n/a for retirement accounts)
-	DayTrading                 float64 `xml:"daytrading,omitempty"`
-	EquityPercentage           float64 `xml:"equitypercentage,omitempty"` // Percentage of equity (margin accounts only)
-	Options                    float64 `xml:"options,omitempty"`          // Options buying power. Path: /response/accounts/accountsummary/accountbalance/buyingpower/
-	SodDayTrading              float64 `xml:"soddaytrading,omitempty"`
-	SodOptions                 float64 `xml:"sodoptions,omitempty"` // Start of day options buying power
-	SodStock                   float64 `xml:"sodstock,omitempty"`   // Start of day stock buying power
-	Stock                      float64 `xml:"stock,omitempty"`      // Stock buying power
+	DayTrading                 float64 `xml:"daytrading,omitempty"`                 //
+	EquityPercentage           float64 `xml:"equitypercentage,omitempty"`           // Percentage of equity (margin accounts only)
+	Options                    float64 `xml:"options,omitempty"`                    // Options buying power. Path: /response/accounts/accountsummary/accountbalance/buyingpower/
+	SodDayTrading              float64 `xml:"soddaytrading,omitempty"`              //
+	SodOptions                 float64 `xml:"sodoptions,omitempty"`                 // Start of day options buying power
+	SodStock                   float64 `xml:"sodstock,omitempty"`                   // Start of day stock buying power
+	Stock                      float64 `xml:"stock,omitempty"`                      // Stock buying power
 }
 
 type AccountHolding struct {
-	AccountType       int                       `xml:"accounttype"` // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
-	CostBasis         float64                   `xml:"costbasis"`   // Holding cost basis
-	DisplayData       AccountHoldingDisplayData `xml:"displaydata"`
-	GainLoss          float64                   `xml:"gainloss"` // Holding gain/loss overall
-	Instrument        AccountHoldingInstrument  `xml:"instrument"`
+	AccountType       int                       `xml:"accounttype"`       // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
+	CostBasis         float64                   `xml:"costbasis"`         // Holding cost basis
+	DisplayData       AccountHoldingDisplayData `xml:"displaydata"`       //
+	GainLoss          float64                   `xml:"gainloss"`          // Holding gain/loss overall
+	Instrument        AccountHoldingInstrument  `xml:"instrument"`        //
 	MarketValue       float64                   `xml:"marketvalue"`       // Holding market value
 	MarketValueChange float64                   `xml:"marketvaluechange"` // Holding market value change
 	Price             float64                   `xml:"price"`             // Instrument price
 	PurchasePrice     float64                   `xml:"purchaseprice"`     // Holding purchase price
 	Qty               float64                   `xml:"qty"`               // Holding quantity
+	Quote             AccountHoldingQuote       `xml:"quote"`
 	Underlying        struct{}                  `xml:"underlying"`
-	Quote             struct {
-		Change    float64 `xml:"change"`    // Holding asset change for the day
-		LastPrice float64 `xml:"lastprice"` // Instrument last price
-	} `xml:"quote"`
+}
+
+type AccountHoldingQuote struct {
+	Change    float64 `xml:"change"`    // Holding asset change for the day
+	LastPrice float64 `xml:"lastprice"` // Instrument last price
 }
 
 type AccountHoldingDisplayData struct {

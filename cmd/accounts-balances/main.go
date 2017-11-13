@@ -28,7 +28,7 @@ func main() {
 	}
 	defer inputFile.Close()
 
-	var accounts lib.AccountsResponse
+	var accounts lib.AccountsBalancesResponse
 	dec := xml.NewDecoder(inputFile)
 	err = dec.Decode(&accounts)
 	if err != nil {
