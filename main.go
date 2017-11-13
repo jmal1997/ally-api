@@ -58,13 +58,13 @@ var configPath	*string = flag.String("config","","The path of the configuration 
 		return
 	}
 
-
 	oauthConfig := oauth1.NewConfig(config.ConsumerKey, config.ConsumerSecret)
 	oauthToken := oauth1.NewToken(config.Token,config.TokenSecret)
 
 	oauthClient := oauth1.NewClient(oauth1.NoContext, oauthConfig,oauthToken)
 
-	_, err = lib.GetAccountsBalances(oauthClient)
+	_, err = lib.GetAccounts(oauthClient)
+	//_, err = lib.GetAccountsBalances(oauthClient)
 	if err != nil{
 		log.Print(errors.Stack(err))
 	}
