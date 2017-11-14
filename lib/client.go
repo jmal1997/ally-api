@@ -26,7 +26,7 @@ func NewClient(consumerKey, consumerSecret, oauthToken, oauthTokenSecret string)
 	return client
 }
 
-func (client *Client) get(path string, response interface{}) error {
+func (client *Client) get(path string, target interface{}) error {
 
 	resp, err := client.Get(root + path)
 	if err != nil {
@@ -38,7 +38,11 @@ func (client *Client) get(path string, response interface{}) error {
 		return errors.Stack(err)
 	}
 
-	err = xml.NewDecoder(r).Decode(response)
+	if resp.StatusCode != 200 {
+		return errors.New("unexpected HTTP status: " + resp.Status)
+	}
+
+	err = xml.NewDecoder(r).Decode(target)
 	if err != nil {
 		return errors.Stack(err)
 	}

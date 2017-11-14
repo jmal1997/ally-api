@@ -13,7 +13,7 @@ func dump(input io.Reader) (io.Reader, error) {
 
 	pc, _, _, _ := runtime.Caller(2)
 	func_ := runtime.FuncForPC(pc)
-	funcChunks := strings.Split(func_.Name(), "/")
+	funcChunks := strings.Split(func_.Name(), ".")
 	funcName := funcChunks[len(funcChunks)-1]
 
 	buf := new(bytes.Buffer)
@@ -28,12 +28,17 @@ func dump(input io.Reader) (io.Reader, error) {
 	}
 	defer f.Close()
 
-	tee := io.TeeReader(input, f)
-
-	_, err = io.Copy(buf, tee)
+	_, err = io.Copy(buf, input)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
+
+	tmp := buf.Bytes()
+	_, err = io.Copy(f, buf)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+	buf = bytes.NewBuffer(tmp)
 
 	return buf, nil
 }

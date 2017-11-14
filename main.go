@@ -25,7 +25,6 @@ func main() {
 	}
 
 	args := flag.Args()
-	jlog.Log(args)
 
 	if len(args) < 2 {
 		help()
@@ -39,16 +38,19 @@ func main() {
 		path string = args[1]
 	)
 
-	// right now,
-	if len(args) == 3 {
+	if strings.Contains(path, "{id}") && len(args) != 3 {
+		log.Fatal("The resource you specified requires a single parameter.")
+	}
+
+	if strings.Contains(path, "{id}") && len(args) == 3 {
 		id, err = strconv.Atoi(args[2])
 		if err != nil {
 			log.Fatal(errors.Stack(err))
 		}
 	}
 
-	if strings.Contains(path, "{id}") && len(args) != 3 {
-		log.Fatal("The resource you specified requires a single parameter.")
+	if !strings.Contains(path, "{id}") && len(args) > 2 {
+		args = args[2:]
 	}
 
 	configFile, err := os.Open(*configPath)
@@ -118,7 +120,7 @@ func main() {
 	case op == "GET" && path == "market/clock":
 		response, err = client.GetClock()
 	case op == "GET" && path == "market/ext/quotes":
-		response, err = client.GetExtQuotes()
+		response, err = client.GetExtQuotes(args)
 	case op == "GET" && path == "market/news/search":
 		response, err = client.GetNewsSearch()
 	case op == "GET" && path == "market/news/{id}":

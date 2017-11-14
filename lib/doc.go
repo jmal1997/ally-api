@@ -40,12 +40,12 @@ package lib
 
 	WATCHLIST CALLS
 	===============
-	GET watchlists
-	POST watchlists
-	GET watchlists/{id}
 	DELETE watchlists/{id}
-	POST watchlists/{id}/symbols
 	DELETE watchlists/{id}/symbols
+	GET watchlists
+	GET watchlists/{id}
+	POST watchlists
+	POST watchlists/{id}/symbols
 
 	DEPRECATED
 	==========

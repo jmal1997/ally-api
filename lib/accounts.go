@@ -8,115 +8,111 @@ import (
 // 	GET accounts
 func (client *Client) GetAccounts() (*AccountsResponse, error) {
 	var (
-		path     string            = "/accounts.xml"
-		response *AccountsResponse = new(AccountsResponse)
+		path   string            = "/accounts.xml"
+		target *AccountsResponse = new(AccountsResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 //GET accounts/balances
 func (client *Client) GetAccountsBalances() (*AccountsBalancesResponse, error) {
 	var (
-		path     string                    = "/accounts/balances.xml"
-		response *AccountsBalancesResponse = new(AccountsBalancesResponse)
+		path   string                    = "/accounts/balances.xml"
+		target *AccountsBalancesResponse = new(AccountsBalancesResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 //	GET accounts/{id}
 func (client *Client) GetAccount(id int) (*AccountResponse, error) {
 	var (
-		path     string           = fmt.Sprintf("/accounts/%d.xml", id)
-		response *AccountResponse = new(AccountResponse)
+		path   string           = fmt.Sprintf("/accounts/%d.xml", id)
+		target *AccountResponse = new(AccountResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 //GET accounts/{id}/balances
 func (client *Client) GetAccountBalances(id int) (*AccountBalancesResponse, error) {
 	var (
-		path     string                   = fmt.Sprintf("/accounts/%d.xml", id)
-		response *AccountBalancesResponse = new(AccountBalancesResponse)
+		path   string                   = fmt.Sprintf("/accounts/%d/balances.xml", id)
+		target *AccountBalancesResponse = new(AccountBalancesResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 //GET accounts/{id}/history
 func (client *Client) GetAccountHistory(id int) (*AccountHistoryResponse, error) {
 	var (
-		path     string                  = fmt.Sprintf("/accounts/%d.xml", id)
-		response *AccountHistoryResponse = new(AccountHistoryResponse)
+		path   string                  = fmt.Sprintf("/accounts/%d/history.xml", id)
+		target *AccountHistoryResponse = new(AccountHistoryResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 //GET accounts/{id}/holdings
 func (client *Client) GetAccountHoldings(id int) (*AccountHoldingsResponse, error) {
 	var (
-		path     string                   = fmt.Sprintf("/accounts/%d.xml", id)
-		response *AccountHoldingsResponse = new(AccountHoldingsResponse)
+		path   string                   = fmt.Sprintf("/accounts/%d/holdings.xml", id)
+		target *AccountHoldingsResponse = new(AccountHoldingsResponse)
 	)
 
-	err := client.get(root+path, response)
+	err := client.get(path, target)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	return response, nil
+	return target, nil
 }
 
 type AccountsResponse struct {
 	AccountSummaries []AccountSummary `json:"accounts" xml:"accounts>accountsummary"`
-	ResponseId       string           `json:"id" xml:"id,attr"`
-	ElapsedTime      float64          `json:"elapsedtime" xml:"elapsedtime,omitempty"`
-	Error            string           `json:"error" xml:"error,omitempty"`
+	Response
 }
 
 type AccountsBalancesResponse struct {
 	AccountBalances []AccountBalanceSimple `json:"accountbalance" xml:"accountbalance"`
-	ResponseId      string                 `json:"id" xml:"id,attr" json:"id"`
-	ElapsedTime     float64                `json:"elapsedtime" xml:"elapsedtime,omitempty"`
-	Error           string                 `json:"error" xml:"error,omitempty"`
-	TotalBalance    float64                `json:"totalbalance" xml:"totalbalance>accountvalue"`
+	Response
+	TotalBalance float64 `json:"totalbalance" xml:"totalbalance>accountvalue"`
 }
 
-type AccountBalancesResponse struct{}
+type AccountBalancesResponse struct{ Response }
 
-type AccountResponse struct{}
+type AccountResponse struct{ Response }
 
-type AccountHoldingsResponse struct{}
+type AccountHoldingsResponse struct{ Response }
 
-type AccountHistoryResponse struct{}
+type AccountHistoryResponse struct{ Response }
 
 type AccountSummary struct {
 	Account         int             `json:"account" xml:"account"` // Account number

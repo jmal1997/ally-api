@@ -1,12 +1,23 @@
 package lib
 
 import (
+	"fmt"
 	"github.com/jackmanlabs/errors"
 )
 
 //GET watchlists
-func (client *Client) GetWatchlists() (*AccountsBalancesResponse, error) {
-	return nil, errors.New("GetWatchlists() not implemented.")
+func (client *Client) GetWatchlists() (*WatchListsResponse, error) {
+	var (
+		path   string              = "/watchlists.xml"
+		target *WatchListsResponse = new(WatchListsResponse)
+	)
+
+	err := client.get(path, target)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return target, nil
 }
 
 //POST watchlists
@@ -15,8 +26,18 @@ func (client *Client) PostWatchlists() (*AccountsBalancesResponse, error) {
 }
 
 //GET watchlists/{id}
-func (client *Client) GetWatchlist(id int) (*AccountsBalancesResponse, error) {
-	return nil, errors.New("GetWatchlist() not implemented.")
+func (client *Client) GetWatchlist(id int) (*WatchListResponse, error) {
+	var (
+		path   string             = fmt.Sprintf("/watchlists/%d.xml", id)
+		target *WatchListResponse = new(WatchListResponse)
+	)
+
+	err := client.get(path, target)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return target, nil
 }
 
 //DELETE watchlists/{id}
@@ -33,3 +54,6 @@ func (client *Client) PostWatchlistSymbols(id int) (*AccountsBalancesResponse, e
 func (client *Client) DeleteWatchlistSymbols(id int) (*AccountsBalancesResponse, error) {
 	return nil, errors.New("DeleteWatchlistSymbols() not implemented.")
 }
+
+type WatchListResponse struct{ Response }
+type WatchListsResponse struct{ Response }
