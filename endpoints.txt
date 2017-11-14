@@ -28,25 +28,25 @@ POST watchlists
 POST watchlists/{id}/symbols
 
 
-./ally-api -config config.json GET accounts
-./ally-api -config config.json GET accounts/balances
-./ally-api -config config.json GET accounts/{id}
-./ally-api -config config.json GET accounts/{id}/balances
-./ally-api -config config.json GET accounts/{id}/history
-./ally-api -config config.json GET accounts/{id}/holdings
-./ally-api -config config.json GET accounts/{id}/orders
-./ally-api -config config.json GET market/clock
-./ally-api -config config.json GET market/ext/quotes
-./ally-api -config config.json GET market/news/search
-./ally-api -config config.json GET market/news/{id}
-./ally-api -config config.json GET market/options/expirations
-./ally-api -config config.json GET market/options/search
-./ally-api -config config.json GET market/options/strikes
-./ally-api -config config.json GET market/quotes (streaming)
-./ally-api -config config.json GET market/timesales
-./ally-api -config config.json GET market/toplists
-./ally-api -config config.json GET member/profile
-./ally-api -config config.json GET utility/status
-./ally-api -config config.json GET utility/version
-./ally-api -config config.json GET watchlists
-./ally-api -config config.json GET watchlists/{id}
+./cli -config config.json GET accounts
+./cli -config config.json GET accounts/balances
+./cli -config config.json GET accounts/{id}
+./cli -config config.json GET accounts/{id}/balances
+./cli -config config.json GET accounts/{id}/history
+./cli -config config.json GET accounts/{id}/holdings
+./cli -config config.json GET accounts/{id}/orders
+./cli -config config.json GET market/clock
+./cli -config config.json GET market/ext/quotes
+./cli -config config.json GET market/news/search
+./cli -config config.json GET market/news/{id}
+./cli -config config.json GET market/options/expirations
+./cli -config config.json GET market/options/search
+./cli -config config.json GET market/options/strikes
+./cli -config config.json GET market/quotes (streaming)
+./cli -config config.json GET market/timesales
+./cli -config config.json GET market/toplists
+./cli -config config.json GET member/profile
+./cli -config config.json GET utility/status
+./cli -config config.json GET utility/version
+./cli -config config.json GET watchlists
+./cli -config config.json GET watchlists/{id}
