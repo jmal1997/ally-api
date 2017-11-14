@@ -15,5 +15,5 @@
 /.idea/
 /ally-api.iml
 config.json
-*.xml
+/*.xml
 ally-api

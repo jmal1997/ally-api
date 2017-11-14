@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response id="77cf30da:12df25c7074:-7ddc">
+    <accountbalance>
+        <account>12345678</account>
+        <accountname>1</accountname>
+        <accountvalue>4293.9800000000005</accountvalue>
+    </accountbalance>
+    <accountbalance>
+        <account>12345678</account>
+        <accountname>2</accountname>
+        <accountvalue>1912.12</accountvalue>
+    </accountbalance>
+    <accountbalance>
+        <account>12345678</account>
+        <accountname>3</accountname>
+        <accountvalue>2418.3199999999997</accountvalue>
+    </accountbalance>
+    <accountbalance>
+        <account>12345678</account>
+        <accountname>4</accountname>
+        <accountvalue>1647.7815</accountvalue>
+    </accountbalance>
+    <accountbalance>
+        <account>12345678</account>
+        <accountname>5</accountname>
+        <accountvalue>67119.39</accountvalue>
+    </accountbalance>
+    <totalbalance>
+        <accountvalue>77391.59</accountvalue>
+    </totalbalance>
+</response>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response id="77cf30da:12df25c7074:-7e2f">
+    <accountholdings>
+        <holding>
+            <accounttype>2</accounttype>
+            <costbasis>40.9</costbasis>
+            <gainloss>16.47</gainloss>
+            <instrument>
+                <cusip>73935A104</cusip>
+                <desc>POWERSHARES QQQ NASDAQ 100</desc>
+                <factor>0.0</factor>
+                <sectyp>CS</sectyp>
+                <sym>QQQQ</sym>
+            </instrument>
+            <marketvalue>57.37</marketvalue>
+            <marketvaluechange>0.3125</marketvaluechange>
+            <price>57.37</price>
+            <purchaseprice>0.0</purchaseprice>
+            <qty>1.0</qty>
+            <quote>
+                <change>0.0</change>
+                <lastprice>57.37</lastprice>
+            </quote>
+            <underlying/>
+        </holding>
+        <holding>
+            <accounttype>1</accounttype>
+            <costbasis>950.09</costbasis>
+            <gainloss>-22.75999999999999</gainloss>
+            <instrument>
+                <cusip>594918AH7</cusip>
+                <desc>MICROSOFT CORP FIXED RT NT</desc>
+                <factor>0.0</factor>
+                <sectyp>BOND</sectyp>
+                <sym>M20AH7</sym>
+            </instrument>
+            <marketvalue>0.0</marketvalue>
+            <marketvaluechange>0.0</marketvaluechange>
+            <price>0.0</price>
+            <purchaseprice>0.9501</purchaseprice>
+            <qty>1.0</qty>
+            <quote>
+                <change>0.0</change>
+                <lastprice>0.0</lastprice>
+            </quote>
+            <underlying/>
+        </holding>
+        <totalsecurities>984.6999999999971</totalsecurities>
+    </accountholdings>
+</response>

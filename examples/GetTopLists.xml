@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response id="-198e0f1:1365a983053:-7fda">
+    <quotes>
+        <quote>
+            <chg>25.3600</chg>
+            <chg_sign>u</chg_sign>
+            <last>449.8600</last>
+            <name>MARKEL CORP</name>
+            <pchg>5.9741 %</pchg>
+            <pcls>424.5000</pcls>
+            <rank>1</rank>
+            <symbol>MKL</symbol>
+            <vl>52525</vl>
+        </quote>
+        <quote>
+            <chg>15.8300</chg>
+            <chg_sign>u</chg_sign>
+            <last>34.8300</last>
+            <name>ANNIE'S INC</name>
+            <pchg>83.3158 %</pchg>
+            <pcls>19.0000</pcls>
+            <rank>2</rank>
+            <symbol>BNNY</symbol>
+            <vl>6664631</vl>
+        </quote>
+        <quote>
+            <chg>7.5400</chg>
+            <chg_sign>u</chg_sign>
+            <last>22.9300</last>
+            <name>AMYLIN PHARMACEUTICALS INC</name>
+            <pchg>48.9929 %</pchg>
+            <pcls>15.3900</pcls>
+            <rank>3</rank>
+            <symbol>AMLN</symbol>
+            <vl>33211085</vl>
+        </quote>
+        <quote>
+            <chg>5.9800</chg>
+            <chg_sign>u</chg_sign>
+            <last>653.0000</last>
+            <name>GOOGLE INC CL A</name>
+            <pchg>0.9242 %</pchg>
+            <pcls>647.0200</pcls>
+            <rank>4</rank>
+            <symbol>GOOG</symbol>
+            <vl>1824715</vl>
+        </quote>
+        <quote>
+            <chg>5.6400</chg>
+            <chg_sign>u</chg_sign>
+            <last>45.9000</last>
+            <name>PENTAIR INC</name>
+            <pchg>14.0089 %</pchg>
+            <pcls>40.2600</pcls>
+            <rank>5</rank>
+            <symbol>PNR</symbol>
+            <vl>6448420</vl>
+        </quote>
+        <quote>
+            <chg>4.3000</chg>
+            <chg_sign>u</chg_sign>
+            <last>50.1300</last>
+            <name>ROBBINS &amp; MYERS INC</name>
+            <pchg>9.3825 %</pchg>
+            <pcls>45.8300</pcls>
+            <rank>6</rank>
+            <symbol>RBN</symbol>
+            <vl>1640720</vl>
+        </quote>
+        <quote>
+            <chg>3.6700</chg>
+            <chg_sign>u</chg_sign>
+            <last>155.5300</last>
+            <name>EQUINIX INC</name>
+            <pchg>2.4167 %</pchg>
+            <pcls>151.8600</pcls>
+            <rank>7</rank>
+            <symbol>EQIX</symbol>
+            <vl>1093616</vl>
+        </quote>
+        <quote>
+            <chg>3.2500</chg>
+            <chg_sign>u</chg_sign>
+            <last>39.8500</last>
+            <name>PROSHARES VIX SHRT TRM FUT ETF</name>
+            <pchg>8.8798 %</pchg>
+            <pcls>36.6000</pcls>
+            <rank>8</rank>
+            <symbol>VIXY</symbol>
+            <vl>366217</vl>
+        </quote>
+        <quote>
+            <chg>3.1700</chg>
+            <chg_sign>u</chg_sign>
+            <last>40.4500</last>
+            <name>VELOCITYSHARES VIX STERM ETN</name>
+            <pchg>8.5032 %</pchg>
+            <pcls>37.2800</pcls>
+            <rank>9</rank>
+            <symbol>VIIX</symbol>
+            <vl>184745</vl>
+        </quote>
+        <quote>
+            <chg>3.0700</chg>
+            <chg_sign>u</chg_sign>
+            <last>40.9700</last>
+            <name>HUNTINGTON INGALLS INDUSTRIES</name>
+            <pchg>8.1003 %</pchg>
+            <pcls>37.9000</pcls>
+            <rank>10</rank>
+            <symbol>HII</symbol>
+            <vl>715916</vl>
+        </quote>
+    </quotes>
+</response>

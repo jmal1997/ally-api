@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response id="77cf30da:12df25c7074:-7e20">
+    <orderstatus>
+        <order>
+            <fixmlmessage>
+                <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><FIXML xmlns="http://www.fixprotocol.org/FIXML-5-0-SP2"><ExecRpt AvgPx="0" CumQty="0" LeavesQty="1" TmInForce="0" Px="10" Typ="2" Side="1" AcctTyp="2" Acct="12345678" Stat="1" ID="SVI-65454645" OrdID="SVI-456456"><Instrmt Desc="FORD MOTOR COMPANY" SecTyp="CS" Sym="F"/><OrdQty Qty="1"/><FillsGrp FillQty="1" FillPx="0"/></ExecRpt></FIXML>]]></fixmlmessage>
+        </order>
+        <order>
+            <fixmlmessage>
+                <![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?><FIXML xmlns="http://www.fixprotocol.org/FIXML-5-0-SP2"><ExecRpt Txt="Due to the additional cost of maintenance on Pink Sheet and OTC-BB securities, we require a minimum purchase of $100 for each trade." TxnTm="2011-02-04T10:48:00.000-05:00" TrdDt="2011-02-04T00:00:00.000-05:00" LeavesQty="0" LastPx="0" LastQty="0" TmInForce="0" Px="0.25" Typ="2" Side="1" AcctTyp="2" Acct="12345678" Stat="8" ID="SVR-4564564" OrdID="SVR-46055395"><Instrmt Desc="GREENLAND MINERALS AND ENERG" SecTyp="CS" Sym="GDLNF"/><OrdQty Qty="10"/></ExecRpt></FIXML>]]></fixmlmessage>
+        </order>
+    </orderstatus>
+</response>
