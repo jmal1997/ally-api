@@ -1,12 +1,14 @@
 package lib
 
 import (
+	"fmt"
 	"github.com/jackmanlabs/errors"
 	"io"
 	"net/http"
 	"os"
 )
 
+// 	GET accounts
 func GetAccounts(client *http.Client) (*AccountsResponse, error) {
 
 	url := "https://api.tradeking.com/v1/accounts.xml"
@@ -34,6 +36,7 @@ func GetAccounts(client *http.Client) (*AccountsResponse, error) {
 	return accountsResponse, nil
 }
 
+//GET accounts/balances
 func GetAccountsBalances(client *http.Client) (*AccountsBalancesResponse, error) {
 
 	url := "https://api.tradeking.com/v1/accounts/balances.xml"
@@ -61,133 +64,176 @@ func GetAccountsBalances(client *http.Client) (*AccountsBalancesResponse, error)
 	return accountsBalanceResponse, nil
 }
 
+//	GET accounts/{id}
+func GetAccount(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+
+	url := fmt.Sprintf("https://api.tradeking.com/v1/accounts/%d.xml", id)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	_, err = io.Copy(os.Stdout, resp.Body)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	var accountsBalanceResponse *AccountsBalancesResponse = new(AccountsBalancesResponse)
+	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return accountsBalanceResponse, nil
+}
+
+//GET accounts/{id}/balances
+func GetAccountBalances(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+	return nil, errors.New("GetAccountBalances() not implemented.")
+}
+
+//GET accounts/{id}/history
+func GetAccountHistory(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+	return nil, errors.New("GetAccountHistory() not implemented.")
+}
+
+//GET accounts/{id}/holdings
+func GetAccountHoldings(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+	return nil, errors.New("GetAccountHoldings() not implemented.")
+}
+
 type AccountsResponse struct {
-	AccountSummaries []AccountSummary `xml:"accounts>accountsummary"`
-	ResponseId       string           `xml:"id,attr" json:"id"`
-	ElapsedTime      float64          `xml:"elapsedtime,omitempty"`
-	Error            string           `xml:"error,omitempty"`
+	AccountSummaries []AccountSummary `json:"accounts" xml:"accounts>accountsummary"`
+	ResponseId       string           `json:"id" xml:"id,attr"`
+	ElapsedTime      float64          `json:"elapsedtime" xml:"elapsedtime,omitempty"`
+	Error            string           `json:"error" xml:"error,omitempty"`
 }
 
 type AccountsBalancesResponse struct {
-	AccountBalances []AccountBalance `xml:"accountbalance"`
-	ResponseId      string           `xml:"id,attr" json:"id"`
-	ElapsedTime     float64          `xml:"elapsedtime,omitempty"`
-	Error           string           `xml:"error,omitempty"`
-	TotalBalance    float64          `xml:"totalbalance>accountvalue"`
+	AccountBalances []AccountBalance `json:"accountbalance" xml:"accountbalance"`
+	ResponseId      string           `json:"id" xml:"id,attr" json:"id"`
+	ElapsedTime     float64          `json:"elapsedtime" xml:"elapsedtime,omitempty"`
+	Error           string           `json:"error" xml:"error,omitempty"`
+	TotalBalance    float64          `json:"totalbalance" xml:"totalbalance>accountvalue"`
 }
 
 type AccountSummary struct {
-	Account         int             `xml:"account"` // Account number
-	AccountBalance  AccountBalance  `xml:"accountbalance"`
-	AccountHoldings AccountHoldings `xml:"accountholdings"`
+	Account         int             `json:"account" xml:"account"` // Account number
+	AccountBalance  AccountBalance  `json:"accountbalance" xml:"accountbalance"`
+	AccountHoldings AccountHoldings `json:"accountholdings" xml:"accountholdings"`
 }
 
 type AccountBalance struct {
-	Account      int                `xml:"account"`
-	AccountName  string             `xml:"accountname,omitempty"` // Used in the 'GET accounts/balances' response
-	AccountValue float64            `xml:"accountvalue"`          // Account value
-	BuyingPower  AccountBuyingPower `xml:"buyingpower"`           //
-	FedCall      float64            `xml:"fedcall"`               // Value of any fed call on account
-	HouseCall    float64            `xml:"housecall"`             // Value of any house call
-	Money        AccountMoney       `xml:"money"`                 //
-	Securities   AccountSecurities  `xml:"securities"`            //
+	Account      int                `json:"account" xml:"account"`
+	AccountName  string             `json:"accountname" xml:"accountname,omitempty"` // Used in the 'GET accounts/balances' response
+	AccountValue float64            `json:"accountvalue" xml:"accountvalue"`         // Account value
+	BuyingPower  AccountBuyingPower `json:"buyingpower" xml:"buyingpower"`           //
+	FedCall      float64            `json:"fedcall" xml:"fedcall"`                   // Value of any fed call on account
+	HouseCall    float64            `json:"housecall" xml:"housecall"`               // Value of any house call
+	Money        AccountMoney       `json:"money" xml:"money"`                       //
+	Securities   AccountSecurities  `json:"securities" xml:"securities"`             //
 }
 
 type AccountMoney struct {
-	AccruedInterest   float64 `xml:"accruedinterest"`   // Amount of any accrued interest on the account
-	Cash              float64 `xml:"cash"`              // cash
-	CashAvailable     float64 `xml:"cashavailable"`     // cash available
-	MarginBalance     float64 `xml:"marginbalance"`     // Margin balance (- indicates debit balance, + indicates credit balance)
-	Mmf               float64 `xml:"mmf"`               // Money market fund
-	Total             float64 `xml:"total"`             // Total cash balance. Path: /response/accounts/accountsummary/accountbalance/money/
-	UnclearedDeposits float64 `xml:"uncleareddeposits"` // uncleared deposits
-	UnsettledFunds    float64 `xml:"unsettledfunds"`    // unsettle funds
-	Yield             float64 `xml:"yield"`             // Yield
+	AccruedInterest   float64 `json:"accruedinterest" xml:"accruedinterest"`     // Amount of any accrued interest on the account
+	Cash              float64 `json:"cash" xml:"cash"`                           // cash
+	CashAvailable     float64 `json:"cashavailable" xml:"cashavailable"`         // cash available
+	MarginBalance     float64 `json:"marginbalance" xml:"marginbalance"`         // Margin balance (- indicates debit balance, + indicates credit balance)
+	Mmf               float64 `json:"mmf" xml:"mmf"`                             // Money market fund
+	Total             float64 `json:"total" xml:"total"`                         // Total cash balance. Path: /response/accounts/accountsummary/accountbalance/money/
+	UnclearedDeposits float64 `json:"uncleareddeposits" xml:"uncleareddeposits"` // uncleared deposits
+	UnsettledFunds    float64 `json:"unsettledfunds" xml:"unsettledfunds"`       // unsettle funds
+	Yield             float64 `json:"yield" xml:"yield"`                         // Yield
 }
 
 type AccountSecurities struct {
-	LongOptions  float64 `xml:"longoptions"`  // Long option market value
-	LongStocks   float64 `xml:"longstocks"`   // Long stock market value
-	Options      float64 `xml:"options"`      // Total option market value. Path: /response/accounts/accountsummary/accountbalance/securities/
-	ShortOptions float64 `xml:"shortoptions"` // Short option market value
-	ShortStocks  float64 `xml:"shortstocks"`  // Short stock market value
-	Stocks       float64 `xml:"stocks"`       // Total stock market value
-	Total        float64 `xml:"total"`        // Total market value (stock & option). Path: /response/accounts/accountsummary/accountbalance/securities/
+	LongOptions  float64 `json:"longoptions" xml:"longoptions"`   // Long option market value
+	LongStocks   float64 `json:"longstocks" xml:"longstocks"`     // Long stock market value
+	Options      float64 `json:"options" xml:"options"`           // Total option market value. Path: /response/accounts/accountsummary/accountbalance/securities/
+	ShortOptions float64 `json:"shortoptions" xml:"shortoptions"` // Short option market value
+	ShortStocks  float64 `json:"shortstocks" xml:"shortstocks"`   // Short stock market value
+	Stocks       float64 `json:"stocks" xml:"stocks"`             // Total stock market value
+	Total        float64 `json:"total" xml:"total"`               // Total market value (stock & option). Path: /response/accounts/accountsummary/accountbalance/securities/
 }
 
 type AccountHoldings struct {
-	Holdings        []AccountHolding           `xml:"holding"`
-	TotalSecurities float64                    `xml:"totalsecurities"` // Total account market value
-	DisplayData     AccountHoldingsDisplayData `xml:"displaydata"`
+	Holdings        []AccountHolding           `json:"holding" xml:"holding"`
+	TotalSecurities float64                    `json:"totalsecurities" xml:"totalsecurities"` // Total account market value
+	DisplayData     AccountHoldingsDisplayData `json:"displaydata" xml:"displaydata"`
 }
 
 type AccountHoldingsDisplayData struct {
-	TotalSecurities string `xml:"totalsecurities"` // Total account market value
+	TotalSecurities string `json:"totalsecurities" xml:"totalsecurities"` // Total account market value
 }
 
 type AccountBuyingPower struct {
-	CashAvailableForWithdrawal float64 `xml:"cashavailableforwithdrawal,omitempty"` // Cash available for withdrawal (cash & margin accounts only, n/a for retirement accounts)
-	DayTrading                 float64 `xml:"daytrading,omitempty"`                 //
-	EquityPercentage           float64 `xml:"equitypercentage,omitempty"`           // Percentage of equity (margin accounts only)
-	Options                    float64 `xml:"options,omitempty"`                    // Options buying power. Path: /response/accounts/accountsummary/accountbalance/buyingpower/
-	SodDayTrading              float64 `xml:"soddaytrading,omitempty"`              //
-	SodOptions                 float64 `xml:"sodoptions,omitempty"`                 // Start of day options buying power
-	SodStock                   float64 `xml:"sodstock,omitempty"`                   // Start of day stock buying power
-	Stock                      float64 `xml:"stock,omitempty"`                      // Stock buying power
+	CashAvailableForWithdrawal float64 `json:"cashavailableforwithdrawal" xml:"cashavailableforwithdrawal,omitempty"` // Cash available for withdrawal (cash & margin accounts only, n/a for retirement accounts)
+	DayTrading                 float64 `json:"daytrading" xml:"daytrading,omitempty"`                                 //
+	EquityPercentage           float64 `json:"equitypercentage" xml:"equitypercentage,omitempty"`                     // Percentage of equity (margin accounts only)
+	Options                    float64 `json:"options" xml:"options,omitempty"`                                       // Options buying power. Path: /response/accounts/accountsummary/accountbalance/buyingpower/
+	SodDayTrading              float64 `json:"soddaytrading" xml:"soddaytrading,omitempty"`                           //
+	SodOptions                 float64 `json:"sodoptions" xml:"sodoptions,omitempty"`                                 // Start of day options buying power
+	SodStock                   float64 `json:"sodstock" xml:"sodstock,omitempty"`                                     // Start of day stock buying power
+	Stock                      float64 `json:"stock" xml:"stock,omitempty"`                                           // Stock buying power
 }
 
 type AccountHolding struct {
-	AccountType       int                       `xml:"accounttype"`       // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
-	CostBasis         float64                   `xml:"costbasis"`         // Holding cost basis
-	DisplayData       AccountHoldingDisplayData `xml:"displaydata"`       //
-	GainLoss          float64                   `xml:"gainloss"`          // Holding gain/loss overall
-	Instrument        AccountHoldingInstrument  `xml:"instrument"`        //
-	MarketValue       float64                   `xml:"marketvalue"`       // Holding market value
-	MarketValueChange float64                   `xml:"marketvaluechange"` // Holding market value change
-	Price             float64                   `xml:"price"`             // Instrument price
-	PurchasePrice     float64                   `xml:"purchaseprice"`     // Holding purchase price
-	Qty               float64                   `xml:"qty"`               // Holding quantity
-	Quote             AccountHoldingQuote       `xml:"quote"`
-	Underlying        struct{}                  `xml:"underlying"`
+	AccountType       int                       `json:"accounttype" xml:"accounttype"`             // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
+	CostBasis         float64                   `json:"costbasis" xml:"costbasis"`                 // Holding cost basis
+	DisplayData       AccountHoldingDisplayData `json:"displaydata" xml:"displaydata"`             //
+	GainLoss          float64                   `json:"gainloss" xml:"gainloss"`                   // Holding gain/loss overall
+	Instrument        AccountHoldingInstrument  `json:"instrument" xml:"instrument"`               //
+	MarketValue       float64                   `json:"marketvalue" xml:"marketvalue"`             // Holding market value
+	MarketValueChange float64                   `json:"marketvaluechange" xml:"marketvaluechange"` // Holding market value change
+	Price             float64                   `json:"price" xml:"price"`                         // Instrument price
+	PurchasePrice     float64                   `json:"purchaseprice" xml:"purchaseprice"`         // Holding purchase price
+	Qty               float64                   `json:"qty" xml:"qty"`                             // Holding quantity
+	Quote             AccountHoldingQuote       `json:"quote" xml:"quote"`
+	Underlying        struct{}                  `json:"underlying" xml:"underlying"`
 }
 
 type AccountHoldingQuote struct {
-	Change    float64 `xml:"change"`    // Holding asset change for the day
-	LastPrice float64 `xml:"lastprice"` // Instrument last price
+	Change    float64 `json:"change" xml:"change"`       // Holding asset change for the day
+	LastPrice float64 `json:"lastprice" xml:"lastprice"` // Instrument last price
 }
 
 type AccountHoldingDisplayData struct {
-	AccountType       string `xml:"accounttype"`       // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
-	AssetClass        string `xml:"assetclass"`        // Holding asset class type
-	Change            string `xml:"change"`            // Holding asset change for the day
-	CostBasis         string `xml:"costbasis"`         // Holding cost basis
-	Desc              string `xml:"desc"`              // Instrument description
-	LastPrice         string `xml:"lastprice"`         // Instrument last price
-	MarketValue       string `xml:"marketvalue"`       // Holding market value
-	MarketValueChange string `xml:"marketvaluechange"` // Holding market value change
-	Qty               string `xml:"qty"`               // Holding quantity
-	Symbol            string `xml:"symbol"`            // Holding underlying symbol
+	AccountType       string `json:"accounttype" xml:"accounttype"`             // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
+	AssetClass        string `json:"assetclass" xml:"assetclass"`               // Holding asset class type
+	Change            string `json:"change" xml:"change"`                       // Holding asset change for the day
+	CostBasis         string `json:"costbasis" xml:"costbasis"`                 // Holding cost basis
+	Desc              string `json:"desc" xml:"desc"`                           // Instrument description
+	LastPrice         string `json:"lastprice" xml:"lastprice"`                 // Instrument last price
+	MarketValue       string `json:"marketvalue" xml:"marketvalue"`             // Holding market value
+	MarketValueChange string `json:"marketvaluechange" xml:"marketvaluechange"` // Holding market value change
+	Qty               string `json:"qty" xml:"qty"`                             // Holding quantity
+	Symbol            string `json:"symbol" xml:"symbol"`                       // Holding underlying symbol
 }
 
 type AccountHoldingInstrument struct {
-	Cusip        string  `xml:"cusip"`  // Instrument cusip
-	Desc         string  `xml:"desc"`   // Instrument description
-	Factor       float64 `xml:"factor"` // Instrument factor
-	SecurityType string  `xml:"sectyp"` // Instrument security type (FIXML)
-	Symbol       string  `xml:"sym"`    // Instrument underlying symbol (FIXML)
+	Cusip        string  `json:"cusip" xml:"cusip"`   // Instrument cusip
+	Desc         string  `json:"desc" xml:"desc"`     // Instrument description
+	Factor       float64 `json:"factor" xml:"factor"` // Instrument factor
+	SecurityType string  `json:"sectyp" xml:"sectyp"` // Instrument security type (FIXML)
+	Symbol       string  `json:"sym" xml:"sym"`       // Instrument underlying symbol (FIXML)
 }
 
 type Account struct {
-	CashBalance       string `xml:"cashbalance"`  // cash balance
-	CashMarketValue   string `xml:"cashmv"`       // Value of cash market value
-	Cfi               string `xml:"cfi"`          // Put or call code(FIXML)
-	MarginMarketValue string `xml:"marginmv"`     // Margin market value
-	MaturityDate      string `xml:"matdt"`        // Instrument maturity date (FIXML)
-	Mmy               string `xml:"mmy"`          // Instrument maturity year/month (FIXML)
-	Multiplier        string `xml:"mult"`         // Instrument multiplier
-	OpenBuyValue      string `xml:"openbuyvalue"` // Open buy value
-	PutOrCall         string `xml:"putcall"`      // put or call
-	ShortBalance      string `xml:"shortbalance"` // short balance (credit for sell?)
-	ShortMarketValue  string `xml:"shortmv"`      // short market value
-	StrikePrice       string `xml:"strkpx"`       // Instrument strike price (FIXML)
+	CashBalance       string `json:"cashbalance" xml:"cashbalance"`   // cash balance
+	CashMarketValue   string `json:"cashmv" xml:"cashmv"`             // Value of cash market value
+	Cfi               string `json:"cfi" xml:"cfi"`                   // Put or call code(FIXML)
+	MarginMarketValue string `json:"marginmv" xml:"marginmv"`         // Margin market value
+	MaturityDate      string `json:"matdt" xml:"matdt"`               // Instrument maturity date (FIXML)
+	Mmy               string `json:"mmy" xml:"mmy"`                   // Instrument maturity year/month (FIXML)
+	Multiplier        string `json:"mult" xml:"mult"`                 // Instrument multiplier
+	OpenBuyValue      string `json:"openbuyvalue" xml:"openbuyvalue"` // Open buy value
+	PutOrCall         string `json:"putcall" xml:"putcall"`           // put or call
+	ShortBalance      string `json:"shortbalance" xml:"shortbalance"` // short balance (credit for sell?)
+	ShortMarketValue  string `json:"shortmv" xml:"shortmv"`           // short market value
+	StrikePrice       string `json:"strkpx" xml:"strkpx"`             // Instrument strike price (FIXML)
 }
