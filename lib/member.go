@@ -6,6 +6,6 @@ import (
 )
 
 //GET member/profile
-func GetProfile(client *http.Client) (*AccountsBalancesResponse, error) {
+func (client *Client)GetProfile() (*AccountsBalancesResponse, error) {
 	return nil, errors.New("GetProfile() not implemented.")
 }

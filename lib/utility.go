@@ -6,11 +6,11 @@ import (
 )
 
 //GET utility/status
-func GetStatus(client *http.Client) (*AccountsBalancesResponse, error) {
+func (client *Client)GetStatus() (*AccountsBalancesResponse, error) {
 	return nil, errors.New("GetStatus() not implemented.")
 }
 
 //GET utility/version
-func GetVersion(client *http.Client) (*AccountsBalancesResponse, error) {
+func (client *Client)GetVersion() (*AccountsBalancesResponse, error) {
 	return nil, errors.New("GetVersion() not implemented.")
 }

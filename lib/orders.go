@@ -6,16 +6,16 @@ import (
 )
 
 //GET accounts/{id}/orders
-func GetAccountOrders(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+func (client *Client)GetAccountOrders(id int) (*AccountsBalancesResponse, error) {
 	return nil, errors.New("GetAccountOrders() not implemented.")
 }
 
 //POST accounts/{id}/orders
-func PostAccountOrders(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+func (client *Client)PostAccountOrders(id int) (*AccountsBalancesResponse, error) {
 	return nil, errors.New("PostAccountOrders() not implemented.")
 }
 
 //POST accounts/{id}/orders/preview
-func PostAccountOrderPreview(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+func (client *Client)PostAccountOrderPreview(id int) (*AccountsBalancesResponse, error) {
 	return nil, errors.New("PostAccountOrderPreview() not implemented.")
 }

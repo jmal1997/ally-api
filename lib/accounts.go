@@ -3,108 +3,96 @@ package lib
 import (
 	"fmt"
 	"github.com/jackmanlabs/errors"
-	"io"
-	"net/http"
-	"os"
 )
 
 // 	GET accounts
-func GetAccounts(client *http.Client) (*AccountsResponse, error) {
+func (client *Client) GetAccounts() (*AccountsResponse, error) {
+	var (
+		path     string            = "/accounts.xml"
+		response *AccountsResponse = new(AccountsResponse)
+	)
 
-	url := "https://api.tradeking.com/v1/accounts.xml"
-	req, err := http.NewRequest("GET", url, nil)
+	err := client.get(root+path, response)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	_, err = io.Copy(os.Stdout, resp.Body)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	var accountsResponse *AccountsResponse = new(AccountsResponse)
-	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	return accountsResponse, nil
+	return response, nil
 }
 
 //GET accounts/balances
-func GetAccountsBalances(client *http.Client) (*AccountsBalancesResponse, error) {
+func (client *Client) GetAccountsBalances() (*AccountsBalancesResponse, error) {
+	var (
+		path     string                    = "/accounts/balances.xml"
+		response *AccountsBalancesResponse = new(AccountsBalancesResponse)
+	)
 
-	url := "https://api.tradeking.com/v1/accounts/balances.xml"
-	req, err := http.NewRequest("GET", url, nil)
+	err := client.get(root+path, response)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	_, err = io.Copy(os.Stdout, resp.Body)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	var accountsBalanceResponse *AccountsBalancesResponse = new(AccountsBalancesResponse)
-	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	return accountsBalanceResponse, nil
+	return response, nil
 }
 
 //	GET accounts/{id}
-func GetAccount(client *http.Client, id int) (*AccountsBalancesResponse, error) {
+func (client *Client) GetAccount(id int) (*AccountResponse, error) {
+	var (
+		path     string           = fmt.Sprintf("/accounts/%d.xml", id)
+		response *AccountResponse = new(AccountResponse)
+	)
 
-	url := fmt.Sprintf("https://api.tradeking.com/v1/accounts/%d.xml", id)
-	req, err := http.NewRequest("GET", url, nil)
+	err := client.get(root+path, response)
 	if err != nil {
 		return nil, errors.Stack(err)
 	}
 
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	_, err = io.Copy(os.Stdout, resp.Body)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	var accountsBalanceResponse *AccountsBalancesResponse = new(AccountsBalancesResponse)
-	//err = xml.NewDecoder(resp.Body).Decode(&accountsResponse)
-	if err != nil {
-		return nil, errors.Stack(err)
-	}
-
-	return accountsBalanceResponse, nil
+	return response, nil
 }
 
 //GET accounts/{id}/balances
-func GetAccountBalances(client *http.Client, id int) (*AccountsBalancesResponse, error) {
-	return nil, errors.New("GetAccountBalances() not implemented.")
+func (client *Client) GetAccountBalances(id int) (*AccountBalancesResponse, error) {
+	var (
+		path     string                   = fmt.Sprintf("/accounts/%d.xml", id)
+		response *AccountBalancesResponse = new(AccountBalancesResponse)
+	)
+
+	err := client.get(root+path, response)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return response, nil
 }
 
 //GET accounts/{id}/history
-func GetAccountHistory(client *http.Client, id int) (*AccountsBalancesResponse, error) {
-	return nil, errors.New("GetAccountHistory() not implemented.")
+func (client *Client) GetAccountHistory(id int) (*AccountHistoryResponse, error) {
+	var (
+		path     string                  = fmt.Sprintf("/accounts/%d.xml", id)
+		response *AccountHistoryResponse = new(AccountHistoryResponse)
+	)
+
+	err := client.get(root+path, response)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return response, nil
 }
 
 //GET accounts/{id}/holdings
-func GetAccountHoldings(client *http.Client, id int) (*AccountsBalancesResponse, error) {
-	return nil, errors.New("GetAccountHoldings() not implemented.")
+func (client *Client) GetAccountHoldings(id int) (*AccountHoldingsResponse, error) {
+	var (
+		path     string                   = fmt.Sprintf("/accounts/%d.xml", id)
+		response *AccountHoldingsResponse = new(AccountHoldingsResponse)
+	)
+
+	err := client.get(root+path, response)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	return response, nil
 }
 
 type AccountsResponse struct {
