@@ -1,6 +1,8 @@
 # ally-api
 
-Ally Invest API bindings for Go.
+Go API bindings for Ally Invest (formerly TradeKing).
+
+Ally Invest documentation can be found here: https://www.ally.com/api/invest/documentation/getting-started/
 
 ## Status
 
