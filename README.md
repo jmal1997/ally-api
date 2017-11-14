@@ -28,14 +28,9 @@ configuration file, the CLI tool will create one. Then, you can populate it, and
 use the now-populated file.
 
 ```
-jackman@dorito:~/gopath/src/github.com/jackmanlabs/ally-api$ go build cmd/cli && ./cli
-jackman@dorito:~/gopath/src/github.com/jackmanlabs/ally-api$ ./cli 
-Usage of ./cli:
-  -config string
-        The path of the configuration file. Specifying a non-existent file will cause an empty one to be created.
-2017/11/14 16:06:08 A config file path must be specified. If the file you specify does not exist, a new one will be created for you which you may populate.
+jackman@dorito:~/gopath/src/github.com/jackmanlabs/ally-api$ go build cmd/cli
 
-jackman@dorito:~/gopath/src/github.com/jackmanlabs/ally-api$ ./cli -config config.json
+jackman@dorito:~/gopath/src/github.com/jackmanlabs/ally-api$ ./cli 
 Usage of ./cli:
   -config string
         The path of the configuration file. Specifying a non-existent file will cause an empty one to be created.
