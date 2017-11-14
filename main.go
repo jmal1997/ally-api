@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/dghubble/oauth1"
 	"github.com/jackmanlabs/ally-api/lib"
 	"github.com/jackmanlabs/bucket/jlog"
 	"github.com/jackmanlabs/errors"
@@ -93,68 +92,65 @@ func main() {
 		log.Fatal(errors.Stack(err))
 	}
 
-	oauthConfig := oauth1.NewConfig(config.ConsumerKey, config.ConsumerSecret)
-	oauthToken := oauth1.NewToken(config.Token, config.TokenSecret)
-	oauthClient := oauth1.NewClient(oauth1.NoContext, oauthConfig, oauthToken)
+	client := lib.NewClient(config.ConsumerKey, config.ConsumerSecret, config.Token, config.TokenSecret)
 
 	var response interface{}
 
 	switch {
-
 	case op == "DELETE" && path == "watchlists/{id}":
-		response, err = lib.DeleteWatchlist(oauthClient, id)
+		response, err = client.DeleteWatchlist(id)
 	case op == "DELETE" && path == "watchlists/{id}/symbols":
-		response, err = lib.DeleteWatchlistSymbols(oauthClient, id)
+		response, err = client.DeleteWatchlistSymbols(id)
 	case op == "GET" && path == "accounts":
-		response, err = lib.GetAccounts(oauthClient)
+		response, err = client.GetAccounts()
 	case op == "GET" && path == "accounts/balances":
-		response, err = lib.GetAccountsBalances(oauthClient)
+		response, err = client.GetAccountsBalances()
 	case op == "GET" && path == "accounts/{id}":
-		response, err = lib.GetAccount(oauthClient, id)
+		response, err = client.GetAccount(id)
 	case op == "GET" && path == "accounts/{id}/balances":
-		response, err = lib.GetAccountBalances(oauthClient, id)
+		response, err = client.GetAccountBalances(id)
 	case op == "GET" && path == "accounts/{id}/history":
-		response, err = lib.GetAccountHistory(oauthClient, id)
+		response, err = client.GetAccountHistory(id)
 	case op == "GET" && path == "accounts/{id}/holdings":
-		response, err = lib.GetAccountHoldings(oauthClient, id)
+		response, err = client.GetAccountHoldings(id)
 	case op == "GET" && path == "accounts/{id}/orders":
-		response, err = lib.GetAccountOrders(oauthClient, id)
+		response, err = client.GetAccountOrders(id)
 	case op == "GET" && path == "market/clock":
-		response, err = lib.GetClock(oauthClient)
+		response, err = client.GetClock()
 	case op == "GET" && path == "market/ext/quotes":
-		response, err = lib.GetExtQuotes(oauthClient)
+		response, err = client.GetExtQuotes()
 	case op == "GET" && path == "market/news/search":
-		response, err = lib.GetNewsSearch(oauthClient)
+		response, err = client.GetNewsSearch()
 	case op == "GET" && path == "market/news/{id}":
-		response, err = lib.GetNews(oauthClient, id)
+		response, err = client.GetNews(id)
 	case op == "GET" && path == "market/options/expirations":
-		response, err = lib.GetOptionsExpirations(oauthClient)
+		response, err = client.GetOptionsExpirations()
 	case op == "GET" && path == "market/options/search":
-		response, err = lib.GetOptionsSearch(oauthClient)
+		response, err = client.GetOptionsSearch()
 	case op == "GET" && path == "market/options/strikes":
-		response, err = lib.GetOptionsStrikes(oauthClient)
+		response, err = client.GetOptionsStrikes()
 	case op == "GET" && path == "market/quotes":
-		response, err = lib.GetQuotes(oauthClient)
+		response, err = client.GetQuotes()
 	case op == "GET" && path == "market/timesales":
-		response, err = lib.GetTimeSales(oauthClient)
+		response, err = client.GetTimeSales()
 	case op == "GET" && path == "market/toplists":
-		response, err = lib.GetTopLists(oauthClient)
+		response, err = client.GetTopLists()
 	case op == "GET" && path == "member/profile":
-		response, err = lib.GetProfile(oauthClient)
+		response, err = client.GetProfile()
 	case op == "GET" && path == "utility/status":
-		response, err = lib.GetStatus(oauthClient)
+		response, err = client.GetStatus()
 	case op == "GET" && path == "utility/version":
-		response, err = lib.GetVersion(oauthClient)
+		response, err = client.GetVersion()
 	case op == "GET" && path == "watchlists":
-		response, err = lib.GetWatchlists(oauthClient)
+		response, err = client.GetWatchlists()
 	case op == "GET" && path == "watchlists/{id}":
-		response, err = lib.GetWatchlist(oauthClient, id)
+		response, err = client.GetWatchlist(id)
 	case op == "POST" && path == "accounts/{id}/orders":
-		response, err = lib.PostAccountOrders(oauthClient, id)
+		response, err = client.PostAccountOrders(id)
 	case op == "POST" && path == "accounts/{id}/orders/preview":
-		response, err = lib.PostAccountOrderPreview(oauthClient, id)
+		response, err = client.PostAccountOrderPreview(id)
 	case op == "POST" && path == "watchlists":
-		response, err = lib.PostWatchlists(oauthClient)
+		response, err = client.PostWatchlists()
 	case op == "POST" && path == "watchlists/{id}/symbols":
 
 		// case op == "GET" && path == "market/quotes":

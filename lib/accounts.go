@@ -103,12 +103,20 @@ type AccountsResponse struct {
 }
 
 type AccountsBalancesResponse struct {
-	AccountBalances []AccountBalance `json:"accountbalance" xml:"accountbalance"`
-	ResponseId      string           `json:"id" xml:"id,attr" json:"id"`
-	ElapsedTime     float64          `json:"elapsedtime" xml:"elapsedtime,omitempty"`
-	Error           string           `json:"error" xml:"error,omitempty"`
-	TotalBalance    float64          `json:"totalbalance" xml:"totalbalance>accountvalue"`
+	AccountBalances []AccountBalanceSimple `json:"accountbalance" xml:"accountbalance"`
+	ResponseId      string                 `json:"id" xml:"id,attr" json:"id"`
+	ElapsedTime     float64                `json:"elapsedtime" xml:"elapsedtime,omitempty"`
+	Error           string                 `json:"error" xml:"error,omitempty"`
+	TotalBalance    float64                `json:"totalbalance" xml:"totalbalance>accountvalue"`
 }
+
+type AccountBalancesResponse struct{}
+
+type AccountResponse struct{}
+
+type AccountHoldingsResponse struct{}
+
+type AccountHistoryResponse struct{}
 
 type AccountSummary struct {
 	Account         int             `json:"account" xml:"account"` // Account number
@@ -118,13 +126,18 @@ type AccountSummary struct {
 
 type AccountBalance struct {
 	Account      int                `json:"account" xml:"account"`
-	AccountName  string             `json:"accountname" xml:"accountname,omitempty"` // Used in the 'GET accounts/balances' response
-	AccountValue float64            `json:"accountvalue" xml:"accountvalue"`         // Account value
-	BuyingPower  AccountBuyingPower `json:"buyingpower" xml:"buyingpower"`           //
-	FedCall      float64            `json:"fedcall" xml:"fedcall"`                   // Value of any fed call on account
-	HouseCall    float64            `json:"housecall" xml:"housecall"`               // Value of any house call
-	Money        AccountMoney       `json:"money" xml:"money"`                       //
-	Securities   AccountSecurities  `json:"securities" xml:"securities"`             //
+	AccountValue float64            `json:"accountvalue" xml:"accountvalue"` // Account value
+	BuyingPower  AccountBuyingPower `json:"buyingpower" xml:"buyingpower"`   //
+	FedCall      float64            `json:"fedcall" xml:"fedcall"`           // Value of any fed call on account
+	HouseCall    float64            `json:"housecall" xml:"housecall"`       // Value of any house call
+	Money        AccountMoney       `json:"money" xml:"money"`               //
+	Securities   AccountSecurities  `json:"securities" xml:"securities"`     //
+}
+
+type AccountBalanceSimple struct {
+	Account      int     `json:"account" xml:"account"`
+	AccountName  string  `json:"accountname" xml:"accountname,omitempty"` // Used in the 'GET accounts/balances' response
+	AccountValue float64 `json:"accountvalue" xml:"accountvalue"`         // Account value
 }
 
 type AccountMoney struct {

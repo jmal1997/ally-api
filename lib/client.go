@@ -3,6 +3,7 @@ package lib
 import (
 	"encoding/xml"
 	"github.com/dghubble/oauth1"
+	"github.com/jackmanlabs/errors"
 	"net/http"
 )
 
