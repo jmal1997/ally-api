@@ -1,4 +1,4 @@
-package lib
+package ally_api
 
 type Response struct {
 	ResponseId  string  `xml:"id,attr"`

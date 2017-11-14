@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/jackmanlabs/ally-api/lib"
+	"github.com/jackmanlabs/ally-api"
 	"github.com/jackmanlabs/bucket/jlog"
 	"github.com/jackmanlabs/errors"
 	"log"
@@ -94,7 +94,7 @@ func main() {
 		log.Fatal(errors.Stack(err))
 	}
 
-	client := lib.NewClient(config.ConsumerKey, config.ConsumerSecret, config.Token, config.TokenSecret)
+	client := ally_api.NewClient(config.ConsumerKey, config.ConsumerSecret, config.Token, config.TokenSecret)
 
 	var response interface{}
 

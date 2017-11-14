@@ -1,0 +1,52 @@
+DELETE watchlists/{id}
+DELETE watchlists/{id}/symbols
+GET accounts
+GET accounts/balances
+GET accounts/{id}
+GET accounts/{id}/balances
+GET accounts/{id}/history
+GET accounts/{id}/holdings
+GET accounts/{id}/orders
+GET market/clock
+GET market/ext/quotes
+GET market/news/search
+GET market/news/{id}
+GET market/options/expirations
+GET market/options/search
+GET market/options/strikes
+GET market/quotes (streaming)
+GET market/timesales
+GET market/toplists
+GET member/profile
+GET utility/status
+GET utility/version
+GET watchlists
+GET watchlists/{id}
+POST accounts/{id}/orders
+POST accounts/{id}/orders/preview
+POST watchlists
+POST watchlists/{id}/symbols
+
+
+./ally-api -config config.json GET accounts
+./ally-api -config config.json GET accounts/balances
+./ally-api -config config.json GET accounts/{id}
+./ally-api -config config.json GET accounts/{id}/balances
+./ally-api -config config.json GET accounts/{id}/history
+./ally-api -config config.json GET accounts/{id}/holdings
+./ally-api -config config.json GET accounts/{id}/orders
+./ally-api -config config.json GET market/clock
+./ally-api -config config.json GET market/ext/quotes
+./ally-api -config config.json GET market/news/search
+./ally-api -config config.json GET market/news/{id}
+./ally-api -config config.json GET market/options/expirations
+./ally-api -config config.json GET market/options/search
+./ally-api -config config.json GET market/options/strikes
+./ally-api -config config.json GET market/quotes (streaming)
+./ally-api -config config.json GET market/timesales
+./ally-api -config config.json GET market/toplists
+./ally-api -config config.json GET member/profile
+./ally-api -config config.json GET utility/status
+./ally-api -config config.json GET utility/version
+./ally-api -config config.json GET watchlists
+./ally-api -config config.json GET watchlists/{id}

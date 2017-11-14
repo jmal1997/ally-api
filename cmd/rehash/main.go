@@ -2,34 +2,34 @@ package main
 
 import (
 	"encoding/xml"
-	"github.com/jackmanlabs/ally-api/lib"
 	"github.com/jackmanlabs/errors"
 	"log"
 	"os"
+	"github.com/jackmanlabs/ally-api"
 )
 
 func main() {
 
 	var todo map[string]interface{} = map[string]interface{}{
-		"GetAccount.xml":            new(lib.AccountResponse),
-		"GetAccountBalances.xml":    new(lib.AccountBalancesResponse),
-		"GetAccountHistory.xml":     new(lib.AccountHistoryResponse),
-		"GetAccountHoldings.xml":    new(lib.AccountHoldingsResponse),
-		"GetAccountOrders.xml":      new(lib.AccountOrdersResponse),
-		"GetAccounts.xml":           new(lib.AccountsResponse),
-		"GetAccountsBalances.xml":   new(lib.AccountsBalancesResponse),
-		"GetClock.xml":              new(lib.ClockResponse),
-		"GetExtQuotes.xml":          new(lib.ExtQuotesResponse),
-		"GetNewsSearch.xml":         new(lib.NewsSearchResponse),
-		"GetOptionsExpirations.xml": new(lib.OptionsExpirationsResponse),
-		"GetOptionsSearch.xml":      new(lib.OptionsSearchResponse),
-		"GetOptionsStrikes.xml":     new(lib.OptionsStrikesResponse),
-		"GetProfile.xml":            new(lib.ProfileResponse),
-		"GetStatus.xml":             new(lib.StatusResponse),
-		"GetTimeSales.xml":          new(lib.TimeSalesResponse),
-		"GetVersion.xml":            new(lib.VersionResponse),
-		"GetWatchlists.xml":         new(lib.WatchListsResponse),
-		//"GetTopLists.xml":           new(lib.TopListsResponse),
+		"GetAccount.xml":            new(ally_api.AccountResponse),
+		"GetAccountBalances.xml":    new(ally_api.AccountBalancesResponse),
+		"GetAccountHistory.xml":     new(ally_api.AccountHistoryResponse),
+		"GetAccountHoldings.xml":    new(ally_api.AccountHoldingsResponse),
+		"GetAccountOrders.xml":      new(ally_api.AccountOrdersResponse),
+		"GetAccounts.xml":           new(ally_api.AccountsResponse),
+		"GetAccountsBalances.xml":   new(ally_api.AccountsBalancesResponse),
+		"GetClock.xml":              new(ally_api.ClockResponse),
+		"GetExtQuotes.xml":          new(ally_api.ExtQuotesResponse),
+		"GetNewsSearch.xml":         new(ally_api.NewsSearchResponse),
+		"GetOptionsExpirations.xml": new(ally_api.OptionsExpirationsResponse),
+		"GetOptionsSearch.xml":      new(ally_api.OptionsSearchResponse),
+		"GetOptionsStrikes.xml":     new(ally_api.OptionsStrikesResponse),
+		"GetProfile.xml":            new(ally_api.ProfileResponse),
+		"GetStatus.xml":             new(ally_api.StatusResponse),
+		"GetTimeSales.xml":          new(ally_api.TimeSalesResponse),
+		"GetVersion.xml":            new(ally_api.VersionResponse),
+		"GetWatchlists.xml":         new(ally_api.WatchListsResponse),
+		//"GetTopLists.xml":           new(ally_api.TopListsResponse),
 	}
 
 	for inputName, target := range todo {

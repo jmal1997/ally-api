@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <response id="77cf30da:12df25c7074:-7dab">
-  <watchlists>
-    <watchlist>
-      <id>DEFAULT</id>
-    </watchlist>
-    <watchlist>
-      <id>my_watchlist</id>
-    </watchlist>
-  </watchlists>
+    <watchlists>
+        <watchlist>
+            <id>DEFAULT</id>
+        </watchlist>
+        <watchlist>
+            <id>my_watchlist</id>
+        </watchlist>
+    </watchlists>
 </response>

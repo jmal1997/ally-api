@@ -1,4 +1,4 @@
-package lib
+package ally_api
 
 import (
 	"fmt"
