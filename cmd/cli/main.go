@@ -19,9 +19,12 @@ func main() {
 	)
 	flag.Parse()
 
-	if *configPath == "" {
-		flag.Usage()
-		log.Fatal("A config file path must be specified. If the file you specify does not exist, a new one will be created for you which you may populate.")
+	config, err := parseConfig(*configPath)
+	if err != nil {
+		log.Fatal(errors.Stack(err))
+	} else if config == nil {
+		log.Print("New, empty config file successfully created: ", *configPath)
+		os.Exit(0)
 	}
 
 	args := flag.Args()
@@ -32,7 +35,6 @@ func main() {
 	}
 
 	var (
-		err  error
 		id   int
 		op   string = args[0]
 		path string = args[1]
@@ -51,47 +53,6 @@ func main() {
 
 	if !strings.Contains(path, "{id}") && len(args) > 2 {
 		args = args[2:]
-	}
-
-	configFile, err := os.Open(*configPath)
-	if os.IsNotExist(err) {
-		configFile, err = os.Create(*configPath)
-		if err != nil {
-			log.Print(errors.Stack(err))
-			log.Fatal("Unable to create the new, empty config file.")
-		}
-
-		enc := json.NewEncoder(configFile)
-		enc.SetIndent("", "\t")
-		err = enc.Encode(Config{})
-		if err != nil {
-			log.Print(errors.Stack(err))
-			log.Fatal("Failure to write empty configuration to new file.")
-		}
-
-		err = configFile.Close()
-		if err != nil {
-			log.Fatal(errors.Stack(err))
-		}
-
-		log.Print("New, empty config file successfully created: ", *configPath)
-		os.Exit(0)
-
-	} else if err != nil {
-		log.Fatal(errors.Stack(err))
-	}
-
-	var config Config
-	dec := json.NewDecoder(configFile)
-	err = dec.Decode(&config)
-	if err != nil {
-		log.Print(errors.Stack(err))
-		log.Fatal("Failure to read existing configuration.")
-	}
-
-	err = configFile.Close()
-	if err != nil {
-		log.Fatal(errors.Stack(err))
 	}
 
 	client := ally_api.NewClient(config.ConsumerKey, config.ConsumerSecret, config.Token, config.TokenSecret)
@@ -170,4 +131,55 @@ type Config struct {
 	ConsumerSecret string
 	Token          string
 	TokenSecret    string
+}
+
+/*
+If parsing is successful, a non-nil config is returned and no error.
+If a new config file (template) is created, a nil config and nil error are returned.
+*/
+func parseConfig(configPath string) (*Config, error) {
+
+	if configPath == "" {
+		flag.Usage()
+		return nil, errors.New("A config file path must be specified. If the file you specify does not exist, a new one will be created for you which you may populate.")
+	}
+
+	configFile, err := os.Open(configPath)
+	if os.IsNotExist(err) {
+		configFile, err = os.Create(configPath)
+		if err != nil {
+			return nil, errors.Stack(err)
+		}
+
+		enc := json.NewEncoder(configFile)
+		enc.SetIndent("", "\t")
+		err = enc.Encode(Config{})
+		if err != nil {
+			return nil, errors.Stack(err)
+		}
+
+		err = configFile.Close()
+		if err != nil {
+			return nil, errors.Stack(err)
+		}
+
+		return nil, nil
+
+	} else if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	var config *Config = new(Config)
+	dec := json.NewDecoder(configFile)
+	err = dec.Decode(config)
+	if err != nil {
+		return nil, errors.Stack(err)
+	}
+
+	err = configFile.Close()
+	if err != nil {
+		log.Fatal(errors.Stack(err))
+	}
+
+	return config, nil
 }
