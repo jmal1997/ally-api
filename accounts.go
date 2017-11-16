@@ -3,6 +3,7 @@ package ally_api
 import (
 	"fmt"
 	"github.com/jackmanlabs/errors"
+	"time"
 )
 
 // 	GET accounts
@@ -119,7 +120,43 @@ type AccountResponse struct {
 
 type AccountHoldingsResponse struct{ Response }
 
-type AccountHistoryResponse struct{ Response }
+type AccountHistoryResponse struct {
+	Response
+	Transactions []AccountTransaction `xml:"transactions>transaction"`
+}
+
+type AccountTransaction struct {
+	Activity    string                   `xml:"activity"`
+	Amount      float64                  `xml:"amount"`
+	Date        time.Time                `xml:"date"`
+	Desc        string                   `xml:"desc"`
+	Symbol      string                   `xml:"symbol"`
+	Transaction AccountTransactionDetail `xml:"transaction"`
+}
+
+type AccountTransactionDetail struct {
+	Accounttype     int                        `xml:"accounttype"`
+	Commission      float64                    `xml:"commission"`
+	Description     string                     `xml:"description"`
+	Fee             float64                    `xml:"fee"`
+	Price           float64                    `xml:"price"`
+	Quantity        float64                    `xml:"quantity"`
+	Secfee          float64                    `xml:"secfee"`
+	Security        AccountTransactionSecurity `xml:"security"`
+	Settlementdate  time.Time                  `xml:"settlementdate"`
+	Side            int                        `xml:"side"`
+	Source          string                     `xml:"source"`
+	Tradedate       time.Time                  `xml:"tradedate"`
+	Transactionid   int                        `xml:"transactionid"`
+	Transactiontype string                     `xml:"transactiontype"`
+}
+
+type AccountTransactionSecurity struct {
+	Cusip  int    `xml:"cusip"`
+	Id     int    `xml:"id"`
+	Sectyp string `xml:"sectyp"`
+	Sym    string `xml:"sym"`
+}
 
 type AccountSummary struct {
 	Account         int             `xml:"account"` // Account number
@@ -225,19 +262,4 @@ type AccountHoldingInstrument struct {
 	Factor       float64 `xml:"factor"` // Instrument factor
 	SecurityType string  `xml:"sectyp"` // Instrument security type (FIXML)
 	Symbol       string  `xml:"sym"`    // Instrument underlying symbol (FIXML)
-}
-
-type Account struct {
-	CashBalance       string `xml:"cashbalance"`  // cash balance
-	CashMarketValue   string `xml:"cashmv"`       // Value of cash market value
-	Cfi               string `xml:"cfi"`          // Put or call code(FIXML)
-	MarginMarketValue string `xml:"marginmv"`     // Margin market value
-	MaturityDate      string `xml:"matdt"`        // Instrument maturity date (FIXML)
-	Mmy               string `xml:"mmy"`          // Instrument maturity year/month (FIXML)
-	Multiplier        string `xml:"mult"`         // Instrument multiplier
-	OpenBuyValue      string `xml:"openbuyvalue"` // Open buy value
-	PutOrCall         string `xml:"putcall"`      // put or call
-	ShortBalance      string `xml:"shortbalance"` // short balance (credit for sell?)
-	ShortMarketValue  string `xml:"shortmv"`      // short market value
-	StrikePrice       string `xml:"strkpx"`       // Instrument strike price (FIXML)
 }

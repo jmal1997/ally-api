@@ -51,9 +51,8 @@ func main() {
 		}
 	}
 
-	if !strings.Contains(path, "{id}") && len(args) > 2 {
-		args = args[2:]
-	}
+	// Simplify args for individual API calls.
+	args = args[2:]
 
 	client := ally_api.NewClient(config.ConsumerKey, config.ConsumerSecret, config.Token, config.TokenSecret)
 
@@ -81,6 +80,9 @@ func main() {
 	case op == "GET" && path == "market/clock":
 		response, err = client.GetClock()
 	case op == "GET" && path == "market/ext/quotes":
+		if len(args) == 0 {
+			log.Fatal("You must provide at least one symbol as a trailing argument.")
+		}
 		response, err = client.GetExtQuotes(args)
 	case op == "GET" && path == "market/news/search":
 		response, err = client.GetNewsSearch()

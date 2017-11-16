@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/xml"
+	"github.com/jackmanlabs/ally-api"
 	"github.com/jackmanlabs/errors"
 	"log"
 	"os"
-	"github.com/jackmanlabs/ally-api"
 )
 
 func main() {

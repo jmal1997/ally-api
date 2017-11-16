@@ -5,14 +5,13 @@ import "log"
 func help() {
 	log.Print(`
 
-This application requires at least two arguments, an operation and a
-resource.
+This application requires at least two arguments, an operation and a resource.
 
-Valid operations include REST operations, such as GET, PUT, POST, DELETE,
-and PATCH. Capitalization is not required.
+Valid operations include REST operations, such as GET, PUT, POST, DELETE, and
+PATCH. Capitalization is not required.
 
-At the time of this writing, the following operation/resource combinations
-are defined:
+At the time of this writing, the following operation/resource combinations are
+defined:
 
 	ACCOUNT CALLS
 	=============
@@ -62,7 +61,6 @@ are defined:
 
 	DEPRECATED
 	==========
-	About Deprecation
 	GET market/chains
 	GET market/quotes
 

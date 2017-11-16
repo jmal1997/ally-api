@@ -39,7 +39,7 @@
             <name>APPLE INC</name>
             <op_flag>0</op_flag>
             <opn>618.3800</opn>
-            <pchg>0.094 %</pchg>
+            <pchg>0.094</pchg>
             <pchg_sign>u</pchg_sign>
             <pcls>614.4800</pcls>
             <pe>17.49</pe>
@@ -55,7 +55,7 @@
             <pvol>21683163</pvol>
             <secclass>0</secclass>
             <sesn>regular</sesn>
-            <sho>932,370,000</sho>
+            <sho>932370000</sho>
             <symbol>AAPL</symbol>
             <tcond>R</tcond>
             <timestamp>1332956100</timestamp>
