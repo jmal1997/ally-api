@@ -30,6 +30,7 @@ func main() {
 		"GetVersion.xml":            new(ally_api.VersionResponse),
 		"GetWatchlists.xml":         new(ally_api.WatchListsResponse),
 		//"GetTopLists.xml":           new(ally_api.TopListsResponse),
+		"FIXML.xml": new(ally_api.Fixml),
 	}
 
 	for inputName, target := range todo {
@@ -59,7 +60,8 @@ func main() {
 
 		enc := xml.NewEncoder(outputFile)
 		enc.Indent("", "\t")
-		err = enc.EncodeElement(target, xml.StartElement{Name: xml.Name{Local: "response"}})
+		err = enc.Encode(target)
+		//err = enc.EncodeElement(target, xml.StartElement{Name: xml.Name{Local: "response"}})
 		if err != nil {
 			log.Fatal(errors.Stack(err))
 		}

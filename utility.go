@@ -34,5 +34,12 @@ func (client *Client) GetVersion() (*VersionResponse, error) {
 	return target, nil
 }
 
-type StatusResponse struct{ Response }
-type VersionResponse struct{ Response }
+type StatusResponse struct {
+	Response
+	Time string `xml:"time"`
+}
+
+type VersionResponse struct {
+	Response
+	Version string `xml:"version"`
+}

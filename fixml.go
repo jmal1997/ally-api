@@ -1,9 +1,10 @@
 package ally_api
 
-type Fixml struct {
+import "encoding/xml"
 
-	// Account number needs to be passed with all order requests.
-	Acct string `xml:"Acct"`
+type Fixml struct {
+	XMLName xml.Name   `xml:"FIXML"`
+	Order   FixmlOrder `xml:"Order"`
 
 	// Only used for closing short positions, "Buy to Cover" orders should
 	// include this attribute as AcctTyp = "5".
@@ -65,14 +66,6 @@ type Fixml struct {
 	// limits (Typ = "2") or stop limits (Typ = "4").
 	Px string `xml:"Px"`
 
-	// Security type attribute is needed."CS" for common stock or "OPT" for
-	// option.
-	SecTyp string `xml:"SecTyp"`
-
-	// Side of market as "1" ‐ Buy, "2" ‐ Sell, "5" ‐ Sell Short. Buy to cover
-	// orders are attributed as buy orders with Side = "1".
-	Side string `xml:"Side"`
-
 	// Strike price of option contract. This tag changes from Strk to StrkPx for
 	// single leg orders.
 	Strk string `xml:"Strk"`
@@ -80,16 +73,41 @@ type Fixml struct {
 	// Strike price of option contract. This tag changes from StrkPx to Strk for
 	// multi‐leg orders.
 	StrkPx string `xml:"StrkPx"`
+}
 
-	// Ticker symbol of underlying security. This is utilized for stock, option,
-	// & multi‐leg orders.
-	Sym string `xml:"Sym"`
+type FixmlOrder struct {
+	OrderQuantity FixmlOrderQuantity `xml:"OrdQty"`
+	Instrument    FixmlInstrument    `xml:"Instrmt"`
+
+	// Account number needs to be passed with all order requests.
+	Acct int `xml:"Acct,attr"`
 
 	// Time in force, possible values include "0" ‐ Day Order, "1" ‐ GTC Order,
 	// "7" ‐ Market on Close. Not applicable when Typ = "1" (market order).
-	TmInForce string `xml:"TmInForce"`
+	TmInForce int `xml:"TmInForce,attr"`
 
 	// Price Type as "1" ‐ Market, "2" ‐ Limit", "3" ‐ Stop, "4" Stop Limit, or
 	// "P" for trailing stop.
-	Typ string `xml:"Typ"`
+	Typ string `xml:"Typ,attr"`
+
+	// Side of market as "1" ‐ Buy, "2" ‐ Sell, "5" ‐ Sell Short. Buy to cover
+	// orders are attributed as buy orders with Side = "1".
+	Side int `xml:"Side,attr"`
+}
+
+type FixmlInstrument struct {
+	XMLName xml.Name `xml:"Instrmt"`
+
+	// Security type attribute is needed."CS" for common stock or "OPT" for
+	// option.
+	SecTyp string `xml:"SecTyp,attr"`
+
+	// Ticker symbol of underlying security. This is utilized for stock, option,
+	// & multi‐leg orders.
+	Sym string `xml:"Sym,attr"`
+}
+
+type FixmlOrderQuantity struct {
+	XMLName xml.Name `xml:"OrdQty"`
+	Qty     int      `xml:"Qty,attr"`
 }

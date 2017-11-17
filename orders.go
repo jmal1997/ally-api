@@ -2,6 +2,7 @@ package ally_api
 
 import (
 	"github.com/jackmanlabs/errors"
+	"encoding/xml"
 )
 
 //GET accounts/{id}/orders
@@ -29,4 +30,18 @@ func (client *Client) PostAccountOrderPreview(id int) (*AccountsBalancesResponse
 	return nil, errors.New("PostAccountOrderPreview() not implemented.")
 }
 
-type AccountOrdersResponse struct{ Response }
+type AccountOrdersResponse struct {
+	Response
+	Orders []Order `xml:"orderstatus>order"`
+}
+
+type Order struct {
+	XMLName xml.Name `xml:"order"`
+	Fixml
+	FixmlMessage FixmlMessage `xml:"fixmlmessage"`
+}
+
+type FixmlMessage struct{
+	//XMLName xml.Name `xml:"fixmlmessage"`
+	Text string `xml:",cdata"`
+}

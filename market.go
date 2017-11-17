@@ -173,7 +173,9 @@ type ExtQuotesResponse struct {
 	Quotes []Quote `xml:"quotes>quote"`
 }
 
-type ClockResponse struct{ Response }
+type ClockResponse struct {
+	ProfileResponse
+}
 
 type Quote struct {
 	Adp100           *float64  `xml:"adp_100"`            // Stock,	Average Daily Price - 100 day

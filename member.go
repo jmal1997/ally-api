@@ -21,4 +21,14 @@ func (client *Client) GetProfile() (*ProfileResponse, error) {
 
 type ProfileResponse struct {
 	Response
+	Date     string  `xml:"date"`
+	Status   Status  `xml:"status"`
+	Message  string  `xml:"message"`
+	UnixTime float64 `xml:"unixtime"`
+}
+
+type Status struct {
+	Current  string `xml:"current"`
+	Next     string `xml:"next"`
+	ChangeAt string `xml:"change_at"`
 }

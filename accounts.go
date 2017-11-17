@@ -118,7 +118,10 @@ type AccountResponse struct {
 	Response
 }
 
-type AccountHoldingsResponse struct{ Response }
+type AccountHoldingsResponse struct {
+	Response
+	AccountHoldings AccountHoldings `xml:"accountholdings"`
+}
 
 type AccountHistoryResponse struct {
 	Response
@@ -205,7 +208,7 @@ type AccountSecurities struct {
 type AccountHoldings struct {
 	Holdings        []AccountHolding           `xml:"holding"`
 	TotalSecurities float64                    `xml:"totalsecurities"` // Total account market value
-	DisplayData     AccountHoldingsDisplayData `xml:"displaydata"`
+	DisplayData     *AccountHoldingsDisplayData `xml:"displaydata,omitempty"`
 }
 
 type AccountHoldingsDisplayData struct {
@@ -226,7 +229,7 @@ type AccountBuyingPower struct {
 type AccountHolding struct {
 	AccountType       int                       `xml:"accounttype"`       // Holdings attribute for where asset as held, "1"= cash, "2"= margin long, "5"=margin short.
 	CostBasis         float64                   `xml:"costbasis"`         // Holding cost basis
-	DisplayData       AccountHoldingDisplayData `xml:"displaydata"`       //
+	DisplayData       *AccountHoldingDisplayData `xml:"displaydata,omitempty"`       //
 	GainLoss          float64                   `xml:"gainloss"`          // Holding gain/loss overall
 	Instrument        AccountHoldingInstrument  `xml:"instrument"`        //
 	MarketValue       float64                   `xml:"marketvalue"`       // Holding market value
