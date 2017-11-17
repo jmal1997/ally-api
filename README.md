@@ -11,17 +11,16 @@ This project is currently under development.
 TODO:
 * Define all response types to coincide with the API documentation.
 
-The bindings take advantage of the XML output of the Ally Invest API. I
-do not plan on supporting anything else. They specifically state in
-their API documentation that XML is output by default. Furthermore, they
-only provide sample XML output (not JSON). Therefore, I'm assuming XML
-is what Ally Invest prefers to support.
+The bindings take advantage of the XML output of the Ally Invest API. I do not
+plan on supporting anything else. They specifically state in their API
+documentation that XML is output by default. Furthermore, they only provide
+sample XML output (not JSON). Therefore, I'm assuming XML is what Ally Invest
+prefers to support.
 
 ## CLI Tool
 
-At this stage of development, I recommend you look at the CLI client
-tool found in the root of the project. It is the primary interface for
-testing the library.
+At this stage of development, I recommend you look at the CLI client tool found
+in the root of the project. It is the primary interface for testing the library.
 
 The CLI tool, for convenience, relies on a configuration file. Simply specify a
 configuration file. It doesn't have to exist. When you specify a non-existing
@@ -142,3 +141,10 @@ track.
 
 Furthermore, if Ally Invest is offended by the reuse of technical documentation,
 I will be happy to make things right. 
+
+## API discrepencies
+
+### /market/ext/quotes
+pchg example has a %, but the live API does not.
+sho example has commas, live API does not.
+tcond is numeric in live API.
